@@ -5,12 +5,13 @@ module.exports = app => {
 
     app.get("/api/workouts", function (req, res) {
         db.Workout.find({})
-            .then(data => {
-                res.json(data)
+            .then(dbWorkouts => {
+                console.log(dbWorkouts);
+                res.json(dbWorkouts)
             })
             .catch(err => {
                 res.json(err)
-            })
+            });
     });
 
     app.post("/api/workouts", function (req, res) {
