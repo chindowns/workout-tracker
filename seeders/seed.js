@@ -1,5 +1,6 @@
 let mongoose = require("mongoose");
 let db = require("../models/Workout.js");
+import seeder from 'mongoose-seed';
 
 mongoose.connect("mongodb://localhost/workout", {
   useNewUrlParser: true,
