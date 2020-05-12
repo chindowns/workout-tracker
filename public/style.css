@@ -25,6 +25,10 @@ nav {
   font-size: 1.2rem;
 }
 
+nav a {
+  padding-left: 20px;
+}
+
 a,
 a:hover,
 a:active,

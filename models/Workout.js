@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const WorkoutSchema = new Schema({
 
     day: {
-        type: Date,
+        $type: Date,
         default: Date.now()
     },
     exercises: [
@@ -17,15 +17,21 @@ const WorkoutSchema = new Schema({
             sets: Number,
             distance: Number
         }
-    ]
+    ],
+
 },
-{toJSON:{
-    virtuals: true
-}}
+    {
+        typeKey: '$type'
+    },
+    {
+        toJSON: {
+            virtuals: true
+        }
+    }
 );
 
 // add dynamically created properties
-WorkoutSchema.virtual("totalDuration").get(function() {
+WorkoutSchema.virtual("totalDuration").get(() => {
     return this.exercises.reduce((total, exercise) => {
         return total + exercise.duration;
     }, 0);

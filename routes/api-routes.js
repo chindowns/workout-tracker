@@ -14,8 +14,11 @@ module.exports = app => {
     });
 
     app.post("/api/workouts", function (req, res) {
-        db.Workout.create({})
-            .then(data => res.json(data))
+        console.log("API-Route LINE 17: ");
+        console.log(req)
+        let newWorkout = req.body;
+        db.Workout.create(newWorkout)
+            .then( dbWorkout => res.json(dbWorkout))
             .catch(err => {
                 console.log("err", err)
                 res.json(err)
@@ -23,15 +26,33 @@ module.exports = app => {
     });
 
     app.put("/api/workouts/:id", ({ body, params }, res) => {
+        console.log("API-Routes, Line 29")
+        console.log(params.id);
+        console.log(body);
+        console.log(params);
         db.Workout.findByIdAndUpdate(
             params.id,
-            { $push: { exercises: body } },
-            { new: true, runValidators: true }
+            { $push: { exercises: [body] } },
+            { new: true }
         )
-            .then(data => res.json(data))
+            .then(dbWorkout => {
+                res.json(dbWorkout);
+            })
             .catch(err => {
                 console.log("err", err)
                 res.json(err)
             })
     });
+
+    app.get("/api/workouts/range", (req, res) => {
+        
+        db.Workout.find({})
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+    });
+
 }
